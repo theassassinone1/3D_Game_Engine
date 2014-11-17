@@ -57,9 +57,39 @@ public class Vector3f {
 	}
 
 	// vector rotate function
-	public Vector3f rotate() {
-
-		return null;
+	public Vector3f rotate(float angle, Vector3f axis) {
+		
+		//sine of half and angle equals to the angle divided by 2 
+		float sinHalfAngle = (float)Math.sin(Math.toRadians(angle / 2));
+		//co-sine of half and angle equals to the angle divided by 2 
+		float cosHalfAngle = (float)Math.cos(Math.toRadians(angle / 2));
+		
+		//rX = the x on the axis times by the sin of half an angle
+		float rX = axis.getX() * sinHalfAngle;
+		//rY = the y on the axis times by the sin of half an angle
+		float rY = axis.getY() * sinHalfAngle;
+		//rZ = the z on the axis times by the sin of half an angle
+		float rZ = axis.getZ() * sinHalfAngle;
+		//rW = the co-sine of half an angle
+		float rW = cosHalfAngle;
+		
+		//creates new Quaternion called rotation and takes in the rX,rY,rZ and rW
+		Quaternion rotation = new Quaternion(rX,rY,rZ,rW);
+		//turns all imaginary quaternion components to negative values
+		Quaternion conjugate = rotation.conjugate(); 
+		
+		//w is the result of the rotation multiplied by this vector (rotation vector) multiplied by the conjugate ("cancels" out imaginary components from the quaternion)
+		Quaternion w = rotation.multi(this).multi(conjugate);
+		
+		//sets x to the x component of w
+		x = w.getX();
+		//sets y to the y component of w
+		y = w.getY();
+		//sets z to the z component of w
+		z = w.getZ();
+		
+		//returns this (Vector rotation using quaternions)
+		return this;
 	}
 
 	// add function

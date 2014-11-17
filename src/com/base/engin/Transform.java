@@ -9,6 +9,7 @@ public class Transform {
 	private static float height;
 	private static float fov;
 
+	private static Camera camera;
 	
 	private Vector3f translation;
 	private Vector3f rotation;
@@ -41,9 +42,13 @@ public class Transform {
 		Matrix4f transformationMatrix = getTransformation();
 		//creates projection matrix and inits projection 
 		Matrix4f projectionMatrix = new Matrix4f().initProjection(fov, width, height, zNear, zFar);
+		//creates camera rotation matrix and inits camera 
+		Matrix4f cameraRotationMatrix = new Matrix4f().initCamera(camera.getForward(), camera.getUp());
+		//creates camera translation matrix and inits camera 
+		Matrix4f cameraTranslationMatrix = new Matrix4f().initTranslation(-camera.getPos().getX(),-camera.getPos().getY(),-camera.getPos().getZ());
 		
-		//returns the transformation and the projection
-		return projectionMatrix.multi(transformationMatrix);
+		//returns the projection multiplied by the camera rotation multiplied by the camera translation multiplied by transformation 
+		return projectionMatrix.multi(cameraRotationMatrix.multi(cameraTranslationMatrix.multi(transformationMatrix)));
 	}
 	
 	//gets translation 
@@ -53,7 +58,7 @@ public class Transform {
 	}
 	
 	//sets projection
-	public static  void setProjection(float fov,float width, float height, float zNear, float zFar){
+	public static void setProjection(float fov,float width, float height, float zNear, float zFar){
 		
 		//sets variables
 			//fov equals fov 
@@ -100,7 +105,7 @@ public class Transform {
 	
 	//gets scale
 	public Vector3f getScale() {
-		//retuns scale
+		//returns scale
 		return scale;
 	}
 	
@@ -114,5 +119,17 @@ public class Transform {
 	public void setScale(float x, float y, float z) {
 		//scale equals a new vector3f  
 		this.scale = new Vector3f(x,y,z);	
+	}
+	
+	//gets camera
+	public static Camera getCamera() {
+		//returns camera
+		return camera;
+	}
+	
+	//sets camera
+	public static void setCamera(Camera camera) {
+		//camera equals camera
+		Transform.camera = camera;
 	}
 }

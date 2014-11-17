@@ -1,11 +1,42 @@
 package com.base.engin;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+import org.newdawn.slick.opengl.TextureLoader;
+
 
 public class ResourceLoader {
+	
+	//loads textures
+	public static Texture loadTexture(String fileName){
+		
+		//looks of the fullstop with in the filename
+		String[] splitArray = fileName.split("\\.");
+		//finds the file extenuation of a file
+		String ext = splitArray[splitArray.length -1];
+		
+		try{
+			//loads texture from texture file and get it in ID form (res/textures)
+			int id = TextureLoader.getTexture(ext, new FileInputStream(new File("./res/textures/" + fileName))).getTextureID();
+			
+			//returns a new texture
+			return new Texture(id);
+		
+		}catch (Exception e){
+			//prints outs any errors
+			e.printStackTrace();
+			//exits the game if an error is found
+			System.exit(1);
+		}		
+		
+		//returns null
+		return null;
+		
+	}
 	
 	public static String loadShaders(String fileName){
 		
@@ -105,7 +136,7 @@ public class ResourceLoader {
 					if(tokens.length > 4){
 					
 					indices.add(Integer.parseInt(tokens[1].split("/")[0]) -1);
-					indices.add(Integer.parseInt(tokens[2].split("/")[0]) -1);
+					indices.add(Integer.parseInt(tokens[3].split("/")[0]) -1);
 					indices.add(Integer.parseInt(tokens[4].split("/")[0]) -1);
 				}
 			}

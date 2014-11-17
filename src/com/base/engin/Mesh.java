@@ -41,19 +41,24 @@ public class Mesh {
 		
 		//enables VertexAttribArray (divides data into different segments 1,2,3,4 and so on)
 		glEnableVertexAttribArray(0);
+		//enables VertexAttribArray (divides data into different segments 1,2,3,4 and so on)
+		glEnableVertexAttribArray(1);
 		
 		//binds a buffer object to a buffer binding point 
 		glBindBuffer(GL_ARRAY_BUFFER,vbo);
 		
 		//how to interpret the data (starts at segment 0 , there are 3 elements in segment 0 , these elements are floats, normalise = false, how big is one vertex, where in each vertex douse this data start)
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
+		//how to interpret the data (starts at segment 0 , there are 2 elements in segment 0 , these elements are floats, normalise = false, how big is one vertex, where in each vertex douse this data start)
+		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
 		
 		//binds the element array buffer to ibo with in the draw method
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		//draws elements with in vbo with the ibo
 		glDrawElements(GL_TRIANGLES,size, GL_UNSIGNED_INT, 0);
 		
-		//disables VertexAttribArray
+		//disables VertexAttribArrays
 		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 	}
 }

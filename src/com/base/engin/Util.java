@@ -17,7 +17,7 @@ public class Util {
 	}
 	
 	//creates a IntegerBuffer (int size)
-	public static IntBuffer createIntegerBuffer(int size){
+	public static IntBuffer createIntBuffer(int size){
 			
 		//returns createFloatBuffer
 		return BufferUtils.createIntBuffer(size);
@@ -39,6 +39,11 @@ public class Util {
 			buffer.put(vertices[i].getPos().getY());
 			//puts the z vertices and position data into the buffer 
 			buffer.put(vertices[i].getPos().getZ());
+			
+			//puts x texture coordinates into the buffer
+			buffer.put(vertices[i].getTexCoord().getX());
+			//puts y texture coordinates into the buffer
+			buffer.put(vertices[i].getTexCoord().getY());
 		}
 		
 		//puts the buffer into the proper order so it can be read (flips it)
@@ -75,7 +80,7 @@ public class Util {
 	public static IntBuffer createFlippedBuffer(int... values){
 		
 		//creates a integer buffer called buffer
-		IntBuffer buffer = createIntegerBuffer(values.length);
+		IntBuffer buffer = createIntBuffer(values.length);
 		
 		//puts all data into the buffer
 		buffer.put(values);

@@ -14,25 +14,37 @@ public class RenderUtil {
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 	}
 	
+	//Sets Textures
+	public static void setTextures(boolean enabled){
+		
+		//if enabled then enable gl texture 2D
+		if(enabled){
+			glEnable(GL_TEXTURE_2D);
+		//else disabled it
+		}else{
+			glDisable(GL_TEXTURE_2D);
+		}
+	}
+	
+	
 	//inits openGL
 	public static void initGraphics(){
 		
 		//clears colour/ set all pixels to black 
 		glClearColor(0.0f , 0.0f , 0.0f , 0.0f);
-		
 		//front face = every face drawn in clock wise order is the front face of the object being drawn
 		glFrontFace(GL_CW);
-		
 		//cullface = the back face of the object 
 		glCullFace(GL_BACK);
-		
 		//gets rid of second rendered face (can be re-enabled manually)
 		glEnable(GL_CULL_FACE);
-		
 		//tests depth from last pixel drawn (draw ordering)
 		glEnable(GL_DEPTH_TEST);
 		
 		//TODO Depth Clamp
+		
+		//enables gl texture 2D
+		glEnable(GL_TEXTURE_2D);
 		
 		//gamma correction	
 		glEnable(GL_FRAMEBUFFER_SRGB);
@@ -44,5 +56,4 @@ public class RenderUtil {
 		//returns open GL version
 		return glGetString(GL_VERSION);
 	}
-	
 }
